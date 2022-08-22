@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:function_tree/function_tree.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,7 +31,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var calculation = "Tesfsdfdsfgfdsgfdhdsh";
+  String calculation = "";
+  String result = "";
 
   void append(String character) {
     setState(() {
@@ -54,6 +56,20 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void solve() {
+    String solution;
+
+    if (calculation.isNotEmpty) {
+      solution = calculation.interpret().toString();
+    } else {
+      solution = "";
+    }
+
+    setState(() {
+      result = solution;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,24 +83,43 @@ class _MyHomePageState extends State<MyHomePage> {
             Column(),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
+              child: Column(
                 children: [
-                  Expanded(
-                    child: AutoSizeText(
-                      calculation,
-                      style: TextStyle(
-                        fontSize: 30,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: AutoSizeText(
+                          result,
+                          style: const TextStyle(
+                            fontSize: 30,
+                          ),
+                          maxLines: 1,
+                        ),
                       ),
-                      maxLines: 1,
-                    ),
+                    ],
                   ),
-                  IconButton(
-                    onPressed: () => {
-                      backspace(),
-                    },
-                    icon: Icon(Icons.arrow_back),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: AutoSizeText(
+                          calculation,
+                          style: const TextStyle(
+                            fontSize: 30,
+                          ),
+                          maxLines: 1,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () => {
+                          backspace(),
+                        },
+                        icon: Icon(Icons.arrow_back),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -219,7 +254,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         ElevatedButton(
                           onPressed: () => {
-                            append(""),
+                            solve(),
                           },
                           child: const Text("="),
                         ),
@@ -231,15 +266,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            calculation += "T";
-          });
-        },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
