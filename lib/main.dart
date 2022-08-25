@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_calc/models/calculation.dart';
 import 'package:flutter/material.dart';
 import 'package:function_tree/function_tree.dart';
 
@@ -33,6 +34,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String calculation = "";
   String result = "";
+  List<Calculation> sessionCalculations = [];
 
   void append(String character) {
     setState(() {
@@ -70,6 +72,8 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void saveCurrentCalculation() {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,22 +84,29 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            Column(),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
+                mainAxisSize: MainAxisSize.max,
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [],
+                  ListView.builder(
+                    reverse: true,
+                    shrinkWrap: true,
+                    itemCount: sessionCalculations.length,
+                    itemBuilder: ((context, index) {
+                      return ListTile(
+                        title: Text(sessionCalculations[index].getResult()),
+                        subtitle:
+                            Text(sessionCalculations[index].getExpression()),
+                      );
+                    }),
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 2,
                   ),
                   IconButton(
-                    onPressed: null,
-                    icon: Icon(
+                    onPressed: () => saveCurrentCalculation(),
+                    icon: const Icon(
                       Icons.arrow_circle_up_sharp,
                     ),
                   ),
@@ -131,155 +142,124 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () => {
-                          backspace(),
-                        },
-                        icon: Icon(Icons.arrow_back),
+                        onPressed: () => backspace(),
+                        icon: const Icon(Icons.arrow_back),
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ButtonBar(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () => {
-                            clearInput(),
-                          },
-                          child: const Text("CE"),
-                        ),
-                        ElevatedButton(
-                          onPressed: () => {
-                            append("/"),
-                          },
-                          child: const Text("/"),
-                        ),
-                        ElevatedButton(
-                          onPressed: () => {
-                            append("*"),
-                          },
-                          child: const Text("*"),
-                        ),
-                        ElevatedButton(
-                          onPressed: () => {
-                            append("-"),
-                          },
-                          child: const Text("-"),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ButtonBar(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () => {
-                            append("7"),
-                          },
-                          child: const Text("7"),
-                        ),
-                        ElevatedButton(
-                          onPressed: () => {
-                            append("8"),
-                          },
-                          child: const Text("8"),
-                        ),
-                        ElevatedButton(
-                          onPressed: () => {
-                            append("9"),
-                          },
-                          child: const Text("9"),
-                        ),
-                        ElevatedButton(
-                          onPressed: () => {
-                            append("+"),
-                          },
-                          child: const Text("+"),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ButtonBar(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () => {
-                            append("4"),
-                          },
-                          child: const Text("4"),
-                        ),
-                        ElevatedButton(
-                          onPressed: () => {
-                            append("5"),
-                          },
-                          child: const Text("5"),
-                        ),
-                        ElevatedButton(
-                          onPressed: () => {
-                            append("6"),
-                          },
-                          child: const Text("6"),
-                        ),
-                        ElevatedButton(
-                          onPressed: () => {
-                            append(""),
-                          },
-                          child: const Text("Test"),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ButtonBar(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () => {
-                            append("1"),
-                          },
-                          child: const Text("1"),
-                        ),
-                        ElevatedButton(
-                          onPressed: () => {
-                            append("2"),
-                          },
-                          child: const Text("2"),
-                        ),
-                        ElevatedButton(
-                          onPressed: () => {
-                            append("3"),
-                          },
-                          child: const Text("3"),
-                        ),
-                        ElevatedButton(
-                          onPressed: () => {
-                            solve(),
-                          },
-                          child: const Text("="),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(bottom: 15),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ButtonBar(
+                        children: [
+                          ElevatedButton(
+                            onPressed: () => clearInput(),
+                            child: const Text("CE"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => append("/"),
+                            child: const Text("/"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => append("*"),
+                            child: const Text("*"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => append("-"),
+                            child: const Text("-"),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ButtonBar(
+                        children: [
+                          ElevatedButton(
+                            onPressed: () => append("7"),
+                            child: const Text("7"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => append("8"),
+                            child: const Text("8"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => append("9"),
+                            child: const Text("9"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => append("+"),
+                            child: const Text("+"),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ButtonBar(
+                        children: [
+                          ElevatedButton(
+                            onPressed: () => append("4"),
+                            child: const Text("4"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => append("5"),
+                            child: const Text("5"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => append("6"),
+                            child: const Text("6"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => append(""),
+                            child: const Text("Test"),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ButtonBar(
+                        children: [
+                          ElevatedButton(
+                            onPressed: () => append("1"),
+                            child: const Text("1"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => append("2"),
+                            child: const Text("2"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => append("3"),
+                            child: const Text("3"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => solve(),
+                            child: const Text("="),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),
