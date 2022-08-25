@@ -31,34 +31,45 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Calculation currentCalculation = Calculation("", "");
-  List<Calculation> sessionCalculations = [];
+  Calculation _currentCalculation = Calculation("", "");
+  List<Calculation> _sessionCalculations = [];
 
   void append(String toAppend) {
     setState(() {
-      currentCalculation.appendToExpresstion(toAppend);
+      _currentCalculation.appendToExpresstion(toAppend);
     });
   }
 
   void clearInput() {
     setState(() {
-      currentCalculation.setExpression("");
+      _currentCalculation.setExpression("");
     });
   }
 
   void backspace() {
     setState(() {
-      currentCalculation.backspace();
+      _currentCalculation.backspace();
     });
   }
 
   void solve() {
     setState(() {
-      currentCalculation.solve();
+      _currentCalculation.solve();
     });
   }
 
-  void saveCurrentCalculation() {}
+  void saveCurrentCalculation() {
+    if (_currentCalculation.getResult().isNotEmpty) {
+      setState(() {
+        _sessionCalculations.add(Calculation(
+          _currentCalculation.getResult(),
+          _currentCalculation.getExpression(),
+        ));
+
+        _currentCalculation = Calculation("", "");
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -76,14 +88,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   ListView.builder(
-                    reverse: true,
                     shrinkWrap: true,
-                    itemCount: sessionCalculations.length,
+                    itemCount: _sessionCalculations.length,
                     itemBuilder: ((context, index) {
                       return ListTile(
-                        title: Text(sessionCalculations[index].getResult()),
+                        title: Text(_sessionCalculations[index].getResult()),
                         subtitle:
-                            Text(sessionCalculations[index].getExpression()),
+                            Text(_sessionCalculations[index].getExpression()),
                       );
                     }),
                   ),
@@ -102,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Expanded(
                         child: AutoSizeText(
-                          currentCalculation.getResult(),
+                          _currentCalculation.getResult(),
                           style: const TextStyle(
                             fontSize: 30,
                           ),
@@ -120,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Expanded(
                         child: AutoSizeText(
-                          currentCalculation.getExpression(),
+                          _currentCalculation.getExpression(),
                           style: const TextStyle(
                             fontSize: 30,
                           ),
