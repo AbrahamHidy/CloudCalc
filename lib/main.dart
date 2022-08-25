@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_calc/models/calculation.dart';
 import 'package:flutter/material.dart';
-import 'package:function_tree/function_tree.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,43 +31,30 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String calculation = "";
-  String result = "";
+  Calculation currentCalculation = Calculation("", "");
   List<Calculation> sessionCalculations = [];
 
-  void append(String character) {
+  void append(String toAppend) {
     setState(() {
-      calculation += character;
+      currentCalculation.appendToExpresstion(toAppend);
     });
   }
 
   void clearInput() {
     setState(() {
-      calculation = "";
+      currentCalculation.setExpression("");
     });
   }
 
   void backspace() {
     setState(() {
-      if (calculation.length > 1) {
-        calculation = calculation.substring(0, calculation.length - 1);
-      } else if (calculation.length == 1) {
-        calculation = "";
-      }
+      currentCalculation.backspace();
     });
   }
 
   void solve() {
-    String solution;
-
-    if (calculation.isNotEmpty) {
-      solution = calculation.interpret().toString();
-    } else {
-      solution = "";
-    }
-
     setState(() {
-      result = solution;
+      currentCalculation.solve();
     });
   }
 
@@ -116,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Expanded(
                         child: AutoSizeText(
-                          result,
+                          currentCalculation.getResult(),
                           style: const TextStyle(
                             fontSize: 30,
                           ),
@@ -134,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Expanded(
                         child: AutoSizeText(
-                          calculation,
+                          currentCalculation.getExpression(),
                           style: const TextStyle(
                             fontSize: 30,
                           ),
