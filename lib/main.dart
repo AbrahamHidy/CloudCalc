@@ -14,7 +14,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Cloud Calc',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: const Color.fromARGB(255, 0, 82, 164),
+          secondary: const Color.fromARGB(255, 77, 255, 61),
+        ),
       ),
       home: const MyHomePage(title: 'Cloud Calc'),
     );
@@ -61,10 +64,13 @@ class _MyHomePageState extends State<MyHomePage> {
   void saveCurrentCalculation() {
     if (_currentCalculation.getResult().isNotEmpty) {
       setState(() {
-        _sessionCalculations.add(Calculation(
-          _currentCalculation.getResult(),
-          _currentCalculation.getExpression(),
-        ));
+        _sessionCalculations.insert(
+          0,
+          Calculation(
+            _currentCalculation.getResult(),
+            _currentCalculation.getExpression(),
+          ),
+        );
 
         _currentCalculation = Calculation("", "");
       });
