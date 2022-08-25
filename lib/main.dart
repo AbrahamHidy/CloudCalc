@@ -92,6 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        toolbarHeight: 35,
       ),
       body: Center(
         child: Column(
