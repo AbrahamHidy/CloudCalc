@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Cloud Calc',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: const Color.fromARGB(255, 0, 82, 164),
+          primary: const Color.fromARGB(255, 0, 91, 182),
           secondary: const Color.fromARGB(255, 77, 255, 61),
         ),
       ),
@@ -77,6 +77,16 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  void loadCalculation(int calculationIndex) {
+    Calculation calculationToLoad = _sessionCalculations[calculationIndex];
+    setState(() {
+      _currentCalculation = Calculation(
+        calculationToLoad.getResult(),
+        calculationToLoad.getExpression(),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,6 +115,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           itemCount: _sessionCalculations.length,
                           itemBuilder: ((context, index) {
                             return ListTile(
+                              onTap: () {
+                                loadCalculation(index);
+                              },
                               title:
                                   Text(_sessionCalculations[index].getResult()),
                               subtitle: Text(
