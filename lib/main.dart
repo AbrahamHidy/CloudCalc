@@ -82,69 +82,80 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: _sessionCalculations.length,
-                    itemBuilder: ((context, index) {
-                      return ListTile(
-                        title: Text(_sessionCalculations[index].getResult()),
-                        subtitle:
-                            Text(_sessionCalculations[index].getExpression()),
-                      );
-                    }),
-                  ),
-                  const Divider(
-                    thickness: 2,
-                  ),
-                  IconButton(
-                    onPressed: () => saveCurrentCalculation(),
-                    icon: const Icon(
-                      Icons.arrow_circle_up_sharp,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Expanded(
+              flex: 1,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Expanded(
+                  flex: 1,
+                  child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Expanded(
-                        child: AutoSizeText(
-                          _currentCalculation.getResult(),
-                          style: const TextStyle(
-                            fontSize: 30,
-                          ),
-                          maxLines: 1,
+                        flex: 1,
+                        child: ListView.builder(
+                          reverse: true,
+                          shrinkWrap: true,
+                          itemCount: _sessionCalculations.length,
+                          itemBuilder: ((context, index) {
+                            return ListTile(
+                              title:
+                                  Text(_sessionCalculations[index].getResult()),
+                              subtitle: Text(
+                                  _sessionCalculations[index].getExpression()),
+                            );
+                          }),
                         ),
                       ),
-                    ],
-                  ),
-                  const Divider(
-                    thickness: 1,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        child: AutoSizeText(
-                          _currentCalculation.getExpression(),
-                          style: const TextStyle(
-                            fontSize: 30,
-                          ),
-                          maxLines: 1,
-                        ),
+                      const Divider(
+                        thickness: 2,
                       ),
                       IconButton(
-                        onPressed: () => backspace(),
-                        icon: const Icon(Icons.arrow_back),
+                        onPressed: () => saveCurrentCalculation(),
+                        icon: const Icon(
+                          Icons.arrow_circle_up_sharp,
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: AutoSizeText(
+                              _currentCalculation.getResult(),
+                              style: const TextStyle(
+                                fontSize: 30,
+                              ),
+                              maxLines: 1,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Divider(
+                        thickness: 1,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: AutoSizeText(
+                              _currentCalculation.getExpression(),
+                              style: const TextStyle(
+                                fontSize: 30,
+                              ),
+                              maxLines: 1,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () => backspace(),
+                            icon: const Icon(Icons.arrow_back),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
             ),
             Padding(
