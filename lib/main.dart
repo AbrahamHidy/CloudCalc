@@ -87,6 +87,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void deleteCalculation(int calculationIndex) {
+    setState(() {
+      _sessionCalculations.removeAt(calculationIndex);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,6 +127,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                 Text(_sessionCalculations[index].getResult()),
                             subtitle: Text(
                                 _sessionCalculations[index].getExpression()),
+                            trailing: IconButton(
+                              icon: const Icon(Icons.delete),
+                              onPressed: () => deleteCalculation(index),
+                            ),
                           );
                         }),
                       ),
