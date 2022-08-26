@@ -37,6 +37,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Calculation _currentCalculation = Calculation("", "");
   List<Calculation> _sessionCalculations = [];
 
+  final ButtonStyle _numberButtonStyle =
+      ElevatedButton.styleFrom(primary: Colors.green);
+
   void append(String toAppend) {
     setState(() {
       _currentCalculation.appendToExpresstion(toAppend);
@@ -98,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        toolbarHeight: 35,
+        toolbarHeight: 40,
       ),
       body: Center(
         child: Column(
@@ -223,14 +226,17 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           ElevatedButton(
                             onPressed: () => append("7"),
+                            style: _numberButtonStyle,
                             child: const Text("7"),
                           ),
                           ElevatedButton(
                             onPressed: () => append("8"),
+                            style: _numberButtonStyle,
                             child: const Text("8"),
                           ),
                           ElevatedButton(
                             onPressed: () => append("9"),
+                            style: _numberButtonStyle,
                             child: const Text("9"),
                           ),
                           ElevatedButton(
@@ -249,19 +255,22 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           ElevatedButton(
                             onPressed: () => append("4"),
+                            style: _numberButtonStyle,
                             child: const Text("4"),
                           ),
                           ElevatedButton(
                             onPressed: () => append("5"),
+                            style: _numberButtonStyle,
                             child: const Text("5"),
                           ),
                           ElevatedButton(
                             onPressed: () => append("6"),
+                            style: _numberButtonStyle,
                             child: const Text("6"),
                           ),
                           ElevatedButton(
-                            onPressed: () => append(""),
-                            child: const Text("Test"),
+                            onPressed: () => solve(),
+                            child: const Text("="),
                           ),
                         ],
                       ),
@@ -275,19 +284,48 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           ElevatedButton(
                             onPressed: () => append("1"),
+                            style: _numberButtonStyle,
                             child: const Text("1"),
                           ),
                           ElevatedButton(
                             onPressed: () => append("2"),
+                            style: _numberButtonStyle,
                             child: const Text("2"),
                           ),
                           ElevatedButton(
                             onPressed: () => append("3"),
+                            style: _numberButtonStyle,
                             child: const Text("3"),
                           ),
                           ElevatedButton(
-                            onPressed: () => solve(),
-                            child: const Text("="),
+                            onPressed: () => append("^"),
+                            child: const Text("^"),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ButtonBar(
+                        children: [
+                          ElevatedButton(
+                            onPressed: () => append("0"),
+                            child: const Text("0"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => append("."),
+                            child: const Text("."),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => append("("),
+                            child: const Text("("),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => append(")"),
+                            child: const Text(")"),
                           ),
                         ],
                       ),
@@ -298,18 +336,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calculate),
-            label: "Calculator",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: "Account",
-          )
-        ],
       ),
     );
   }
