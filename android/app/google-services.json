@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "787513510167",
+    "project_id": "cloudcalc-2b19d",
+    "storage_bucket": "cloudcalc-2b19d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:787513510167:android:89190cddfd0ea24cd5cf52",
+        "android_client_info": {
+          "package_name": "com.example.cloud_calc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "787513510167-rhjakrb1bh70s6rmlu4jg8isapqmr2am.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMDkj3y5-12Oat7lhpCpdQwrohD9T0iQw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "787513510167-rhjakrb1bh70s6rmlu4jg8isapqmr2am.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "787513510167-98i63333ed7r4ft86lnf24mk1oiot239.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cloudCalc"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

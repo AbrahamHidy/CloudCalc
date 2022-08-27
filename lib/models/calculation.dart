@@ -38,7 +38,11 @@ class Calculation {
   bool solve() {
     try {
       if (_expression.isNotEmpty) {
-        _result = _expression.interpret().toString();
+        String result = _expression.interpret().toString();
+        if (result.substring(result.length - 2) == ".0") {
+          result = result.substring(0, result.length - 2);
+        }
+        _result = result;
       } else {
         _result = "";
       }

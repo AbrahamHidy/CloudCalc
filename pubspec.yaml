@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   auto_size_text: ^3.0.0
   function_tree: ^0.8.13
+  firebase_core: ^1.21.1
 
 dev_dependencies:
   flutter_test:
