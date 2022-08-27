@@ -35,14 +35,24 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Calculation _currentCalculation = Calculation("", "");
-  List<Calculation> _sessionCalculations = [];
+  final List<Calculation> _sessionCalculations = [];
 
   final ButtonStyle _numberButtonStyle =
       ElevatedButton.styleFrom(primary: Colors.green);
 
   void append(String toAppend) {
+    String newChars = "";
+    if (toAppend == "(" &&
+        _currentCalculation.getExpression().isNotEmpty &&
+        "0123456789)"
+            .contains(_currentCalculation.getExpression().characters.last)) {
+      newChars += "*$toAppend";
+    } else {
+      newChars = toAppend;
+    }
+
     setState(() {
-      _currentCalculation.appendToExpresstion(toAppend);
+      _currentCalculation.appendToExpresstion(newChars);
     });
   }
 
