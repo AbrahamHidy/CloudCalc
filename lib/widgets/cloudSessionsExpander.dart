@@ -13,6 +13,8 @@ class CloudSessionsExpander extends StatefulWidget {
 class _CloudSessionsExpanderState extends State<CloudSessionsExpander> {
   bool _open = false;
 
+  final _formKey = GlobalKey<FormState>();
+
   void _expandToggle(bool? open) {
     setState(() {
       _open = open ?? !_open;
@@ -40,8 +42,64 @@ class _CloudSessionsExpanderState extends State<CloudSessionsExpander> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Expanded(
-            child: Column(
-              children: [],
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Login"),
+                  const SizedBox(height: 30),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: "Your email",
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 15),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Choose a password",
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 30),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: const Color.fromARGB(255, 3, 46, 132)),
+                    onPressed: () {
+                      // Validate returns true if the form is valid, or false otherwise.
+                      if (_formKey.currentState!.validate()) {
+                        // If the form is valid, display a snackbar. In the real world,
+                        // you'd often call a server or save the information in a database.
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Processing Data')),
+                        );
+                      }
+                    },
+                    child: const Text('Submit'),
+                  ),
+                  const SizedBox(height: 60),
+                  Row(
+                    children: [
+                      Text("Need an account?"),
+                      TextButton(
+                        onPressed: null,
+                        child: Text("Get a login"),
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           Row(
@@ -52,12 +110,20 @@ class _CloudSessionsExpanderState extends State<CloudSessionsExpander> {
                 onPressed: () => _expandToggle(null),
                 icon: Icon(_open ? Icons.arrow_drop_up : Icons.arrow_drop_down),
               ),
-              Text(
-                "Unsaved",
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                ),
+              Row(
+                children: [
+                  Icon(Icons.cloud_sync),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "Unsaved",
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
               ),
               IconButton(
                 onPressed: null,
