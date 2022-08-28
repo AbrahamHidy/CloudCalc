@@ -46,9 +46,9 @@ class _MyHomePageState extends State<MyHomePage> {
   final ButtonStyle _numberButtonStyle =
       ElevatedButton.styleFrom(primary: Colors.green);
   final ButtonStyle _functionButtonStyle =
-      ElevatedButton.styleFrom(primary: Color.fromARGB(255, 141, 80, 0));
+      ElevatedButton.styleFrom(primary: const Color.fromARGB(255, 98, 93, 86));
   final ButtonStyle _accentButtonStyle =
-      ElevatedButton.styleFrom(primary: Color.fromARGB(255, 3, 46, 132));
+      ElevatedButton.styleFrom(primary: const Color.fromARGB(255, 3, 46, 132));
 
   void append(String toAppend) {
     String newChars = "";
@@ -142,24 +142,34 @@ class _MyHomePageState extends State<MyHomePage> {
                         shrinkWrap: true,
                         itemCount: _sessionCalculations.length,
                         itemBuilder: ((context, index) {
-                          return ListTile(
-                            onTap: () {
-                              loadCalculation(index);
-                            },
-                            title:
-                                Text(_sessionCalculations[index].getResult()),
-                            subtitle: Text(
-                                _sessionCalculations[index].getExpression()),
-                            trailing: IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () => deleteCalculation(index),
+                          return Padding(
+                            padding: EdgeInsets.only(top: 5),
+                            child: ListTile(
+                              onTap: () {
+                                loadCalculation(index);
+                              },
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                  width: 1,
+                                  color: Color.fromARGB(136, 170, 170, 170),
+                                ),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              title:
+                                  Text(_sessionCalculations[index].getResult()),
+                              subtitle: Text(
+                                  _sessionCalculations[index].getExpression()),
+                              trailing: IconButton(
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: Color.fromARGB(255, 183, 26, 26),
+                                ),
+                                onPressed: () => deleteCalculation(index),
+                              ),
                             ),
                           );
                         }),
                       ),
-                    ),
-                    const Divider(
-                      thickness: 2,
                     ),
                     IconButton(
                       onPressed: () => saveCurrentCalculation(),
