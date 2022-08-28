@@ -37,6 +37,7 @@ dependencies:
   auto_size_text: ^3.0.0
   function_tree: ^0.8.13
   firebase_core: ^1.21.1
+  cloud_firestore: ^3.4.6
 
 dev_dependencies:
   flutter_test:

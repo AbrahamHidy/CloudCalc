@@ -21,9 +21,9 @@ class MyApp extends StatelessWidget {
       title: 'Cloud Calc',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: const Color.fromARGB(255, 0, 91, 182),
-          secondary: const Color.fromARGB(255, 77, 255, 61),
+          primary: const Color.fromARGB(255, 255, 255, 255),
         ),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       home: const MyHomePage(title: 'Cloud Calc'),
     );
@@ -45,6 +45,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final ButtonStyle _numberButtonStyle =
       ElevatedButton.styleFrom(primary: Colors.green);
+  final ButtonStyle _functionButtonStyle =
+      ElevatedButton.styleFrom(primary: Color.fromARGB(255, 141, 80, 0));
+  final ButtonStyle _accentButtonStyle =
+      ElevatedButton.styleFrom(primary: Color.fromARGB(255, 3, 46, 132));
 
   void append(String toAppend) {
     String newChars = "";
@@ -216,18 +220,22 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           ElevatedButton(
                             onPressed: () => clearInput(),
+                            style: _accentButtonStyle,
                             child: const Text("CE"),
                           ),
                           ElevatedButton(
                             onPressed: () => append("/"),
+                            style: _functionButtonStyle,
                             child: const Text("/"),
                           ),
                           ElevatedButton(
                             onPressed: () => append("*"),
+                            style: _functionButtonStyle,
                             child: const Text("*"),
                           ),
                           ElevatedButton(
                             onPressed: () => append("-"),
+                            style: _functionButtonStyle,
                             child: const Text("-"),
                           ),
                         ],
@@ -257,6 +265,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           ElevatedButton(
                             onPressed: () => append("+"),
+                            style: _functionButtonStyle,
                             child: const Text("+"),
                           ),
                         ],
@@ -285,8 +294,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: const Text("6"),
                           ),
                           ElevatedButton(
-                            onPressed: () => solve(),
-                            child: const Text("="),
+                            onPressed: () => append(")"),
+                            style: _functionButtonStyle,
+                            child: const Text(")"),
                           ),
                         ],
                       ),
@@ -314,8 +324,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: const Text("3"),
                           ),
                           ElevatedButton(
-                            onPressed: () => append("^"),
-                            child: const Text("^"),
+                            onPressed: () => append("("),
+                            style: _functionButtonStyle,
+                            child: const Text("("),
                           ),
                         ],
                       ),
@@ -329,19 +340,23 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           ElevatedButton(
                             onPressed: () => append("0"),
+                            style: _numberButtonStyle,
                             child: const Text("0"),
                           ),
                           ElevatedButton(
                             onPressed: () => append("."),
+                            style: _numberButtonStyle,
                             child: const Text("."),
                           ),
                           ElevatedButton(
-                            onPressed: () => append("("),
-                            child: const Text("("),
+                            onPressed: () => append("^"),
+                            style: _functionButtonStyle,
+                            child: const Text("^"),
                           ),
                           ElevatedButton(
-                            onPressed: () => append(")"),
-                            child: const Text(")"),
+                            onPressed: () => solve(),
+                            style: _accentButtonStyle,
+                            child: const Text("="),
                           ),
                         ],
                       ),
