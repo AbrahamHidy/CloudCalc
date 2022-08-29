@@ -24,11 +24,11 @@ class _CloudSessionsExpanderState extends State<CloudSessionsExpander> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: _open ? MediaQuery.of(context).size.height - 30 : 40,
+      height: _open ? MediaQuery.of(context).size.height - 30 : 50,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.elliptical(10, 10),
-          bottomRight: Radius.elliptical(10, 10),
+          bottomLeft: Radius.elliptical(20, 20),
+          bottomRight: Radius.elliptical(20, 20),
         ),
         color: Colors.white,
         boxShadow: [
