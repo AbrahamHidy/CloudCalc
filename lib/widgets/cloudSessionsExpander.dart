@@ -40,7 +40,7 @@ class _CloudSessionsExpanderState extends State<CloudSessionsExpander> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Account(),
+          Expanded(child: Account()),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
