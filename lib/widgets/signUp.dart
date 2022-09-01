@@ -4,11 +4,27 @@ import 'package:cloud_calc/widgets/signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   final Function switchToLogin;
   SignUp({Key? key, required this.switchToLogin}) : super(key: key);
 
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
   final _signUpFormKey = GlobalKey<FormState>();
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,37 +33,45 @@ class SignUp extends StatelessWidget {
       children: [
         const Text("Sign up!"),
         const SizedBox(height: 30),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text("Email"),
-            TextFormField(
-              cursorColor: Colors.black,
-              decoration: const InputDecoration(
-                hintText: "Your email",
+        Form(
+          key: _signUpFormKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text("Email"),
+              TextFormField(
+                controller: emailController,
+                cursorColor: Colors.black,
+                decoration: const InputDecoration(
+                  hintText: "Your email",
+                ),
+                validator: (value) {
+                  if (value == null ||
+                      value.isEmpty ||
+                      !value.contains("@") ||
+                      !value.contains(".")) {
+                    return 'Please enter your email';
+                  }
+                  return null;
+                },
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your email';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 30),
-            const Text("Password"),
-            TextFormField(
-              cursorColor: Colors.black,
-              decoration: const InputDecoration(
-                hintText: "Your new password",
+              const SizedBox(height: 30),
+              const Text("Password"),
+              TextFormField(
+                controller: passwordController,
+                cursorColor: Colors.black,
+                decoration: const InputDecoration(
+                  hintText: "Your new password",
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your password';
+                  }
+                  return null;
+                },
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your password';
-                }
-                return null;
-              },
-            ),
-          ],
+            ],
+          ),
         ),
         const SizedBox(height: 30),
         ElevatedButton(
@@ -57,11 +81,8 @@ class SignUp extends StatelessWidget {
           onPressed: () {
             // Validate returns true if the form is valid, or false otherwise.
             if (_signUpFormKey.currentState!.validate()) {
-              // If the form is valid, display a snackbar. In the real world,
-              // you'd often call a server or save the information in a database.
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Processing Data')),
-              );
+              print(emailController.text);
+              print(passwordController.text);
             }
           },
           child: const Text('Sign up'),
@@ -75,7 +96,7 @@ class SignUp extends StatelessWidget {
               style: TextButton.styleFrom(
                 primary: Colors.black,
               ),
-              onPressed: () => switchToLogin(),
+              onPressed: () => widget.switchToLogin(),
               child: const Text("Log in"),
             )
           ],

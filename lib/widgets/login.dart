@@ -4,11 +4,28 @@ import 'package:cloud_calc/widgets/signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-class Login extends StatelessWidget {
-  final _loginFormKey = GlobalKey<FormState>();
+class Login extends StatefulWidget {
   final Function switchToSignUp;
 
   Login({Key? key, required this.switchToSignUp}) : super(key: key);
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final _loginFormKey = GlobalKey<FormState>();
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,37 +34,45 @@ class Login extends StatelessWidget {
       children: [
         const Text("Login"),
         const SizedBox(height: 30),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text("Email"),
-            TextFormField(
-              cursorColor: Colors.black,
-              decoration: const InputDecoration(
-                hintText: "Your email",
+        Form(
+          key: _loginFormKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text("Email"),
+              TextFormField(
+                controller: emailController,
+                cursorColor: Colors.black,
+                decoration: const InputDecoration(
+                  hintText: "Your email",
+                ),
+                validator: (value) {
+                  if (value == null ||
+                      value.isEmpty ||
+                      !value.contains("@") ||
+                      !value.contains(".")) {
+                    return 'Please enter your email';
+                  }
+                  return null;
+                },
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your email';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 30),
-            const Text("Password"),
-            TextFormField(
-              cursorColor: Colors.black,
-              decoration: const InputDecoration(
-                hintText: "Your password",
+              const SizedBox(height: 30),
+              const Text("Password"),
+              TextFormField(
+                controller: passwordController,
+                cursorColor: Colors.black,
+                decoration: const InputDecoration(
+                  hintText: "Your password",
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your password';
+                  }
+                  return null;
+                },
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your password';
-                }
-                return null;
-              },
-            ),
-          ],
+            ],
+          ),
         ),
         const SizedBox(height: 30),
         ElevatedButton(
@@ -75,7 +100,7 @@ class Login extends StatelessWidget {
               style: TextButton.styleFrom(
                 primary: Colors.black,
               ),
-              onPressed: () => switchToSignUp(),
+              onPressed: () => widget.switchToSignUp(),
               child: const Text("Sign up"),
             )
           ],
