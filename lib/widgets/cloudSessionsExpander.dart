@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_calc/models/calculation.dart';
 import 'package:cloud_calc/widgets/account.dart';
@@ -17,7 +15,7 @@ class _CloudSessionsExpanderState extends State<CloudSessionsExpander> {
   bool _open = false;
 
   double minHeight = 50;
-  int maxHeight = window.innerHeight != null ? window.innerHeight! - 30 : 50;
+  int maxHeight = 50;
   double height = 50;
 
   void _expandToggle(bool? open) {
@@ -33,6 +31,7 @@ class _CloudSessionsExpanderState extends State<CloudSessionsExpander> {
 
   @override
   Widget build(BuildContext context) {
+    maxHeight = MediaQuery.of(context).size.height.toInt() - 30;
     return GestureDetector(
       onVerticalDragUpdate: (details) {
         if (height + details.delta.dy >= minHeight &&
@@ -43,7 +42,7 @@ class _CloudSessionsExpanderState extends State<CloudSessionsExpander> {
         }
       },
       onVerticalDragEnd: (details) {
-        if (height + minHeight > maxHeight / 2) {
+        if (height > maxHeight / 2) {
           _expandToggle(true);
         } else {
           _expandToggle(false);
