@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserController {
+  Stream<User?> authState = FirebaseAuth.instance.authStateChanges();
+
   UserController._privateConstructor() {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    authState.listen((User? user) {
       if (user == null) {
         print('User is currently signed out!');
       } else {

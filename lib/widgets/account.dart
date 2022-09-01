@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_calc/controllers/userController.dart';
 import 'package:cloud_calc/models/calculation.dart';
 import 'package:cloud_calc/widgets/signUp.dart';
 import 'package:cloud_calc/widgets/login.dart';
@@ -14,6 +15,8 @@ class Account extends StatefulWidget {
 
 class _AccountState extends State<Account> {
   bool _hasAccount = true;
+
+  UserController userController = UserController();
 
   void toggleHasAccount() {
     setState(() {
