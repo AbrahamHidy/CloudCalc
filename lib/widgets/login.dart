@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_calc/controllers/userController.dart';
 import 'package:cloud_calc/models/calculation.dart';
 import 'package:cloud_calc/widgets/signUp.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _loginFormKey = GlobalKey<FormState>();
+
+  UserController userController = UserController();
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -80,13 +83,9 @@ class _LoginState extends State<Login> {
             primary: const Color.fromARGB(255, 3, 46, 132),
           ),
           onPressed: () {
-            // Validate returns true if the form is valid, or false otherwise.
             if (_loginFormKey.currentState!.validate()) {
-              // If the form is valid, display a snackbar. In the real world,
-              // you'd often call a server or save the information in a database.
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Processing Data')),
-              );
+              userController.loginUser(
+                  emailController.text, passwordController.text);
             }
           },
           child: const Text('Login'),

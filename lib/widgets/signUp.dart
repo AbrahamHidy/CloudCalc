@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_calc/controllers/userController.dart';
 import 'package:cloud_calc/models/calculation.dart';
 import 'package:cloud_calc/widgets/signUp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,23 +20,7 @@ class _SignUpState extends State<SignUp> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void createNewUser() async {
-    try {
-      final credential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+  UserController userController = UserController();
 
   @override
   void dispose() {
@@ -100,7 +85,8 @@ class _SignUpState extends State<SignUp> {
           onPressed: () {
             // Validate returns true if the form is valid, or false otherwise.
             if (_signUpFormKey.currentState!.validate()) {
-              createNewUser();
+              userController.createNewUser(
+                  emailController.text, passwordController.text);
             }
           },
           child: const Text('Sign up'),
